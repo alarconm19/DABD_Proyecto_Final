@@ -9,16 +9,18 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Config handlebars
 app.set('views', __dirname + '/views');
 app.engine('.hbs', engine ({
     extname: '.hbs'
 }));
 app.set('view engine', '.hbs');
 
+// Config public folder
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Config database
-
+//....
 
 // Config session
 app.use(session({
@@ -31,8 +33,9 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Config routes
+app.use('/', routes);
+
 app.listen(PORT, () => {
     console.log(`Server on port ${PORT}`);
 });
-
-app.use('/', routes);
