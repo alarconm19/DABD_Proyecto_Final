@@ -1,0 +1,9 @@
+node js v22 o posterior
+https://nodejs.org/en/download/prebuilt-installer
+no instalar chocolatey
+
+en un terminal dentro de la carpeta del proyecto:
+
+npm install
+npm run dev (para correr el servidor)
+control + c (para parar el servidor)
