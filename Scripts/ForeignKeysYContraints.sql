@@ -38,9 +38,3 @@ ALTER TABLE AFDB.dbo.Fixture ADD CONSTRAINT Fixture_Torneo_FK FOREIGN KEY (IDTor
 
 --DirectorTecnico
 ALTER TABLE AFDB.dbo.DirectorTecnico ADD CONSTRAINT DirectorTecnico_Equipo_FK FOREIGN KEY (NumEquipo) REFERENCES AFDB.dbo.Equipo(NumEquipo);
-
-
-
-
-
-

@@ -8,13 +8,17 @@
     <title> {{title}} </title>
 
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 
 <body>
-    {{> sidebar}} <!-- Barra lateral del admin -->
-    {{{body}}} <!-- Aquí se carga el contenido del dashboard específico -->
+    <div class="d-flex">
+        {{> sidebar}} <!-- Barra lateral del admin -->
 
+        <div class="col-9 offset-2" style="padding-left: 0;"> <!-- 9 columnas ocupadas por el contenido -->
+            {{{body}}} <!-- Aquí se carga el contenido del dashboard específico -->
+        </div>
+    </div>
 
     <script src="/js/bootstrap.min.js"></script>
 </body>

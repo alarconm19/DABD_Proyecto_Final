@@ -9,5 +9,6 @@ router.get('/', (req, res) => {
 
 // ejemplo
 // router.get('/about', controller.getAbout);
+router.get('/inscripcion-equipos', controller.getInscripcionEquipos);
 
 module.exports = router;
