@@ -1,36 +1,39 @@
 <!-- Main Content -->
 <div class="container-fluid ms-5" style="margin-left: 260px; padding-top: 20px;">
     <h2 class="text-uppercase mb-4">Creación de Torneos</h2>
-    <form>
-        <div class="mb-3">
-            <label for="nombreTorneo" class="form-label">Nombre del Torneo</label>
-            <input type="text" class="form-control" id="nombreTorneo" placeholder="Ingrese el nombre del torneo"
-                required>
+    <form action="/creacion-torneo" method="POST">
+        <div class="col-md-6">
+
+            <div class="mb-3">
+                <label for="nombreTorneo" class="form-label">Nombre del Torneo</label>
+                <input type="text" class="form-control" id="nombreTorneo" placeholder="Ingrese el nombre del torneo"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <input type="number" class="form-control" id="categoria" placeholder="Número de Categoría" required>
+            </div>
+            <div class="mb-3">
+                <label for="division" class="form-label">División</label>
+                <input type="number" class="form-control" id="division" placeholder="Número de División" required>
+            </div>
+            <div class="mb-3">
+                <label for="fechaInicio" class="form-label">Fecha de Inicio del Torneo</label>
+                <input type="date" class="form-control" id="fechaInicio" required>
+            </div>
+            <div class="mb-3">
+                <label for="fechaFin" class="form-label">Fecha de Fin del Torneo</label>
+                <input type="date" class="form-control" id="fechaFin" required>
+            </div>
+            <div class="mb-3">
+                <label for="inicioInscripcion" class="form-label">Fecha de Inicio de Inscripción</label>
+                <input type="date" class="form-control" id="inicioInscripcion" required>
+            </div>
+            <div class="mb-3">
+                <label for="finInscripcion" class="form-label">Fecha de Fin de Inscripción</label>
+                <input type="date" class="form-control" id="finInscripcion" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Torneo</button>
         </div>
-        <div class="mb-3">
-            <label for="categoria" class="form-label">Categoría</label>
-            <input type="number" class="form-control" id="categoria" placeholder="Número de Categoría" required>
-        </div>
-        <div class="mb-3">
-            <label for="division" class="form-label">División</label>
-            <input type="number" class="form-control" id="division" placeholder="Número de División" required>
-        </div>
-        <div class="mb-3">
-            <label for="fechaInicio" class="form-label">Fecha de Inicio del Torneo</label>
-            <input type="date" class="form-control" id="fechaInicio" required>
-        </div>
-        <div class="mb-3">
-            <label for="fechaFin" class="form-label">Fecha de Fin del Torneo</label>
-            <input type="date" class="form-control" id="fechaFin" required>
-        </div>
-        <div class="mb-3">
-            <label for="inicioInscripcion" class="form-label">Fecha de Inicio de Inscripción</label>
-            <input type="date" class="form-control" id="inicioInscripcion" required>
-        </div>
-        <div class="mb-3">
-            <label for="finInscripcion" class="form-label">Fecha de Fin de Inscripción</label>
-            <input type="date" class="form-control" id="finInscripcion" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Crear Torneo</button>
     </form>
 </div>

@@ -1,29 +1,32 @@
+<!-- Main Content -->
 <div class="container-fluid ms-5" style="margin-left: 260px; padding-top: 20px;">
     <h2 class="text-uppercase mb-4">Inscripción de Equipos</h2>
-    <form>
-        <div class="mb-3">
-            <label for="torneo" class="form-label">Seleccione el Torneo</label>
-            <select class="form-select" id="torneo" required>
-                <option value="">Seleccione un torneo...</option>
-                <option value="1">Torneo Apertura</option>
-                <option value="2">Torneo Clausura</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="equipo" class="form-label">Equipo a Inscribir</label>
-            <input type="text" class="form-control" id="equipo" placeholder="Ingrese el nombre del equipo" required>
-        </div>
-        <div class="mb-3">
-            <label for="categoriaInscripcion" class="form-label">Categoría</label>
-            <input type="number" class="form-control" id="categoriaInscripcion" placeholder="Número de Categoría"
-                required>
-        </div>
-        <div class="mb-3">
-            <label for="divisionInscripcion" class="form-label">División</label>
-            <input type="number" class="form-control" id="divisionInscripcion" placeholder="Número de División"
-                required>
-        </div>
-        <button type="submit" class="btn btn-success">Inscribir Equipo</button>
-    </form>
+    <form action="/inscripcion-equipo" method="POST">
+        <div class="col-md-6">
 
+            <div class="mb-3">
+                <label for="torneo" class="form-label">Seleccione el Torneo</label>
+                <select class="form-select" id="torneo" required>
+                    <option value="">Seleccione un torneo...</option>
+                    <option value="1">Torneo Apertura</option>
+                    <option value="2">Torneo Clausura</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="equipo" class="form-label">Equipo a Inscribir</label>
+                <input type="text" class="form-control" id="equipo" placeholder="Ingrese el nombre del equipo" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoriaInscripcion" class="form-label">Categoría</label>
+                <input type="number" class="form-control" id="categoriaInscripcion" placeholder="Número de Categoría"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="divisionInscripcion" class="form-label">División</label>
+                <input type="number" class="form-control" id="divisionInscripcion" placeholder="Número de División"
+                    required>
+            </div>
+            <button type="submit" class="btn btn-success">Inscribir Equipo</button>
+        </div>
+    </form>
 </div>
