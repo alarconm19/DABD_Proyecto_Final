@@ -1,0 +1,26 @@
+.custom-sidebar {
+    background-color: #2e7d32; /* Verde medio oscuro */
+    left: 20px; /* Alejado del borde izquierdo */
+    bottom: 20px; /* Espaciado desde el borde inferior */
+    width: 300px; /* Ancho ajustable */
+    height: 90%; /* Altura ajustable */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 1.5rem; /* Espaciado interno del contenedor */
+}
+
+.custom-sidebar h5 {
+    font-size: 1.2rem; /* Tamaño del texto del título */
+    margin-bottom: 1rem; /* Espaciado debajo del título */
+    padding-left: 10px; /* Desplazar título hacia la derecha */
+}
+
+.custom-sidebar .nav-link {
+    font-size: 1rem; /* Tamaño del texto de los enlaces */
+    padding: 0.5rem 0; /* Espaciado vertical de los enlaces */
+    padding-left: 10px; /* Mueve los enlaces hacia la derecha */
+}
+
+.custom-sidebar .nav-link:hover {
+    background-color: #256629; /* Fondo más oscuro al pasar el mouse */
+    border-radius: 4px; /* Bordes redondeados al hover */
+}
