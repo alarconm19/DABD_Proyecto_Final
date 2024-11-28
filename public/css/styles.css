@@ -5,6 +5,7 @@
     width: 300px; /* Ancho ajustable */
     height: 90%; /* Altura ajustable */
     border-radius: 8px; /* Bordes redondeados */
+    z-index: 1050; /* Asegura que el sidebar esté por encima del contenido */
     padding: 1.5rem; /* Espaciado interno del contenedor */
 }
 
