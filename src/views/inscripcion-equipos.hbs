@@ -1,47 +1,29 @@
-<!-- Main Content -->
 <div class="container-fluid ms-5" style="margin-left: 260px; padding-top: 20px;">
-    <h2 class="text-uppercase mb-4">Registro de Equipos</h2>
-    <div class="row">
-        <!-- Formulario para registro de equipo -->
-        <div class="col-md-6">
-            <h4 class="mb-3">Registrar Nuevo Equipo</h4>
-            <form action="/registro-equipo" method="POST">
-                <div class="mb-3">
-                    <label for="numDivision" class="form-label">Número de División</label>
-                    <input type="number" class="form-control" id="numDivision" name="numDivision" required>
-                </div>
-                <div class="mb-3">
-                    <label for="numCategoria" class="form-label">Número de Categoría</label>
-                    <input type="number" class="form-control" id="numCategoria" name="numCategoria" required>
-                </div>
-                <div class="mb-3">
-                    <label for="nombreEquipo" class="form-label">Nombre del Equipo</label>
-                    <input type="text" class="form-control" id="nombreEquipo" name="nombreEquipo" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar Equipo</button>
-            </form>
+    <h2 class="text-uppercase mb-4">Inscripción de Equipos</h2>
+    <form>
+        <div class="mb-3">
+            <label for="torneo" class="form-label">Seleccione el Torneo</label>
+            <select class="form-select" id="torneo" required>
+                <option value="">Seleccione un torneo...</option>
+                <option value="1">Torneo Apertura</option>
+                <option value="2">Torneo Clausura</option>
+            </select>
         </div>
+        <div class="mb-3">
+            <label for="equipo" class="form-label">Equipo a Inscribir</label>
+            <input type="text" class="form-control" id="equipo" placeholder="Ingrese el nombre del equipo" required>
+        </div>
+        <div class="mb-3">
+            <label for="categoriaInscripcion" class="form-label">Categoría</label>
+            <input type="number" class="form-control" id="categoriaInscripcion" placeholder="Número de Categoría"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="divisionInscripcion" class="form-label">División</label>
+            <input type="number" class="form-control" id="divisionInscripcion" placeholder="Número de División"
+                required>
+        </div>
+        <button type="submit" class="btn btn-success">Inscribir Equipo</button>
+    </form>
 
-        <!-- Formulario para asignar Director Técnico -->
-        <div class="col-md-6">
-            <h4 class="mb-3">Asignar Director Técnico</h4>
-            <form action="/asignar-dt" method="POST">
-                <div class="mb-3">
-                    <label for="nombreDT" class="form-label">Nombre del Director Técnico</label>
-                    <input type="text" class="form-control" id="nombreDT" name="nombreDT" required>
-                </div>
-                <div class="mb-3">
-                    <label for="equipo" class="form-label">Seleccionar Equipo</label>
-                    <select class="form-select" id="equipo" name="equipo" required>
-                        <!-- Las opciones de equipos deberían generarse dinámicamente -->
-                        <option value="">Seleccionar Equipo</option>
-                        <option value="1">Equipo A</option>
-                        <option value="2">Equipo B</option>
-                        <option value="3">Equipo C</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success">Asignar Director Técnico</button>
-            </form>
-        </div>
-    </div>
 </div>
