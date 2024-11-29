@@ -167,7 +167,7 @@ function postRegistroJugador(req, res) {
 
     // Convierte los valores necesarios a enteros
     const dniInt = parseInt(dni, 10);
-    const numEquipo = 1;
+    const numEquipo = null;
 
     console.log(req.body);
     // Prepara la consulta SQL con parámetros
@@ -246,7 +246,8 @@ function postInscripcionJugador(req, res) {
         res.status(500).send('Ocurrió un error al asignar el jugador.');
     }
     
-    res.send('Jugador asignado exitosamente.');
+    console.log('Jugador asignado exitosamente.');
+    res.render('inscripcion-jugador');
 }
 
 module.exports = {
