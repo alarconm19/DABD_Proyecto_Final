@@ -185,7 +185,44 @@ function getRegistroJugador(req, res) {
 }
 
 function postRegistroJugador(req, res) {
+    
+    const { dni, nombre, apellido, direccion, fechaNacimiento, telefono } = req.body;
 
+    // Convierte los valores necesarios a enteros
+    const dniInt = parseInt(dni, 10);
+    const numEquipo = 1;
+
+    console.log(req.body);
+    // Prepara la consulta SQL con parámetros
+    const query = `
+        EXEC InsertarJugador 
+        @DNI = ${dniInt}, 
+        @Nombre = '${nombre}', 
+        @Apellido = '${apellido}', 
+        @Direccion = '${direccion}', 
+        @FechaNac = '${fechaNacimiento}',
+        @URLFotoPerf = 'asd', 
+        @Telefono = '${telefono}',
+        @NumEquipo = ${numEquipo};
+    `;
+
+    //console.log(query); // Esto imprimirá la consulta antes de ejecutarla
+     // Ejecuta la consulta
+    req.conn.query(query, (err, rows) => {
+        if (err) {
+            console.error('Error al ejecutar la consulta:', err.message);
+            return res.render('registro-jugador', { 
+                title: 'Registro de Jugadores', 
+                error: 'Hubo un error al intentar registrar el jugador. Por favor, inténtalo nuevamente.' 
+            });
+        }
+
+        console.log('Datos insertados:', rows); // Esto te ayudará a ver el resultado
+        res.render('registro-jugador', { 
+            title: 'Registro de Jugadores', 
+            success: 'Jugador registrado exitosamente.' 
+        });
+    });
 }
 
 function getInscripcionJugador(req, res) {

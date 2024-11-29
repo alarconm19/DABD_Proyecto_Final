@@ -5,7 +5,7 @@
         <!-- Formulario para registro de jugador -->
         <div class="col-md-6">
             <h4 class="mb-3">Registrar Nuevo Jugador</h4>
-            <form action="/registro-jugador" method="POST" enctype="multipart/form-data">
+            <form action="/registro-jugador" method="POST">
                 <div class="mb-3">
                     <label for="dni" class="form-label">DNI</label>
                     <input type="text" class="form-control" id="dni" name="dni" required>
@@ -29,11 +29,7 @@
                 <div class="mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
                     <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                </div>
-                <div class="mb-3">
-                    <label for="fotoPerfil" class="form-label">Foto de Perfil</label>
-                    <input type="file" class="form-control" id="fotoPerfil" name="fotoPerfil" accept="image/*">
-                </div>
+                </div>                
                 <button type="submit" class="btn btn-primary">Registrar Jugador</button>
             </form>
         </div>
