@@ -9,9 +9,13 @@ router.get('/', (req, res) => {
 
 // ejemplo
 // router.get('/about', controller.getAbout);
-router.get('/inscripcion-equipos', controller.getInscripcionEquipos);
-// router.get('/inscripcion-jugadores', controller.getInscripcionJugadores);
 router.get('/creacion-torneos', controller.getCreacionTorneos);
+router.post('/creacion-torneos', controller.postCreacionTorneos);
+
+router.get('/inscripcion-equipos', controller.getInscripcionEquipos);
+router.post('/inscripcion-equipos', controller.postInscripcionEquipos);
+
 router.get('/registro-equipos', controller.getRegistroEquipos);
+// router.post('/registro-equipos', controller.postRegistroEquipos);
 
 module.exports = router;
