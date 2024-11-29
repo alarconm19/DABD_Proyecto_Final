@@ -305,6 +305,7 @@ function getEquiposYJugadores(req, res) {
                         ELSE 0 
                     END AS Edad
             FROM Jugador
+            ORDER BY Nombre, Apellido
         `, (err, jugadores) => {
             if (err) {
                 console.error(err);
