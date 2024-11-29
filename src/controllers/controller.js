@@ -159,11 +159,10 @@ function postRegistroEquipos(req, res) {
 
 
 function getRegistroJugador(req, res) {
-    res.render('registro-jugador', { title: 'Registro de Jugadores' });
+    res.render('registro-jugador', { title: 'Creacion de Torneos' });
 }
 
 function postRegistroJugador(req, res) {
-    
     const { dni, nombre, apellido, direccion, fechaNacimiento, telefono } = req.body;
 
     // Convierte los valores necesarios a enteros
@@ -173,38 +172,51 @@ function postRegistroJugador(req, res) {
     console.log(req.body);
     // Prepara la consulta SQL con parámetros
     const query = `
-        EXEC InsertarJugador 
-        @DNI = ${dniInt}, 
-        @Nombre = '${nombre}', 
-        @Apellido = '${apellido}', 
-        @Direccion = '${direccion}', 
+        EXEC InsertarJugador
+        @DNI = ${dniInt},
+        @Nombre = '${nombre}',
+        @Apellido = '${apellido}',
+        @Direccion = '${direccion}',
         @FechaNac = '${fechaNacimiento}',
-        @URLFotoPerf = 'asd', 
+        @URLFotoPerf = 'asd',
         @Telefono = '${telefono}',
         @NumEquipo = ${numEquipo};
     `;
 
     //console.log(query); // Esto imprimirá la consulta antes de ejecutarla
-     // Ejecuta la consulta
+    // Ejecuta la consulta
     req.conn.query(query, (err, rows) => {
         if (err) {
             console.error('Error al ejecutar la consulta:', err.message);
-            return res.render('registro-jugador', { 
-                title: 'Registro de Jugadores', 
-                error: 'Hubo un error al intentar registrar el jugador. Por favor, inténtalo nuevamente.' 
+            return res.render('registro-jugador', {
+                title: 'Registro de Jugadores',
+                error: 'Hubo un error al intentar registrar el jugador. Por favor, inténtalo nuevamente.'
             });
         }
 
         console.log('Datos insertados:', rows); // Esto te ayudará a ver el resultado
-        res.render('registro-jugador', { 
-            title: 'Registro de Jugadores', 
-            success: 'Jugador registrado exitosamente.' 
+        res.render('registro-jugador', {
+            title: 'Registro de Jugadores',
+            success: 'Jugador registrado exitosamente.'
         });
     });
 }
 
 function getInscripcionJugador(req, res) {
-    res.render('inscripcion-jugador', { title: 'Asignar jugadores' });
+    //obtener todos los jufadores para mostrarlos
+    req.conn.query('SELECT NumCategoria, DNI, Nombre, Apellido FROM Jugador WHERE NumEquipo is null', (err, jugadores) => {
+        if (err) {
+            res.send(err);
+        }
+
+        req.conn.query('SELECT NumEquipo, Nombre, NumDivision, NumCategoria from Equipo', (err, equipos) => {
+            if (err) {
+                res.send(err);
+            }
+
+            res.render('inscripcion-jugador', { title: 'Inscripcion de jugador', equipos: equipos.recordset, jugadores: jugadores.recordset });
+        });
+    });
 }
 
 function postInscripcionJugador(req, res) {
