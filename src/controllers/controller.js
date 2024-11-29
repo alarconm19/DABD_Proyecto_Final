@@ -254,7 +254,7 @@ function postInscripcionJugador(req, res) {
     }
 
     console.log('Jugador asignado exitosamente.');
-    res.render('inscripcion-jugador');
+    res.render('inscripcion-jugador', { title: 'Inscripcion de jugador', success: 'Jugador asignado exitosamente.' });
 }
 
 module.exports = {
