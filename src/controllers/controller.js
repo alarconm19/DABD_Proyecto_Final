@@ -169,7 +169,14 @@ function postRegistroJugador(req, res) {
     const dniInt = parseInt(dni, 10);
     const numEquipo = null;
 
-    console.log(req.body);
+    // verifica si la edad del jugador es entre 41 a 55 años
+    const fechaNacimientoDate = new Date(fechaNacimiento);
+    const fechaActual = new Date();
+    const edad = fechaActual.getFullYear() - fechaNacimientoDate.getFullYear();
+    if (edad < 41 || edad > 55) {
+        return res.render('registro-jugador', { title: 'Registro de Jugadores', error: 'El jugador debe tener entre 41 y 55 años.' });
+    }
+
     // Prepara la consulta SQL con parámetros
     const query = `
         EXEC InsertarJugador
@@ -240,12 +247,12 @@ function postInscripcionJugador(req, res) {
                     WHERE DNI = ${jugadorInt};
             `);
 
-        
+
     } catch (error) {
         console.error('Error al asignar jugador:', error);
         res.status(500).send('Ocurrió un error al asignar el jugador.');
     }
-    
+
     console.log('Jugador asignado exitosamente.');
     res.render('inscripcion-jugador');
 }

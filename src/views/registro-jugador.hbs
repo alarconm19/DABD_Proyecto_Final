@@ -12,15 +12,18 @@
                 </div>
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre" required>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre"
+                        required>
                 </div>
                 <div class="mb-3">
                     <label for="apellido" class="form-label">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese el apellido" required>
+                    <input type="text" class="form-control" id="apellido" name="apellido"
+                        placeholder="Ingrese el apellido" required>
                 </div>
                 <div class="mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la dirección" required>
+                    <input type="text" class="form-control" id="direccion" name="direccion"
+                        placeholder="Ingrese la dirección" required>
                 </div>
                 <div class="mb-3">
                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
@@ -28,12 +31,23 @@
                 </div>
                 <div class="mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingrese su telefono" required>
+                    <input type="tel" class="form-control" id="telefono" name="telefono"
+                        placeholder="Ingrese su telefono" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Registrar Jugador</button>
             </form>
+            <div class="col-md-3 d-flex align-items-center">
+                {{#if success}}
+                <div class="alert alert-success mt-3" role="alert">
+                    {{success}}
+                </div>
+                {{/if}}
+                {{#if error}}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{error}}
+                </div>
+                {{/if}}
+            </div>
         </div>
-
-
     </div>
 </div>
