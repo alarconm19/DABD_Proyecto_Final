@@ -226,21 +226,27 @@ function postInscripcionJugador(req, res) {
         return res.status(400).send('Por favor, complete todos los campos.');
     }
 
+    const equipoInt = parseInt(equipo, 10);
+    const jugadorInt = parseInt(jugador, 10);
+    console.log(equipoInt);
+    console.log(jugadorInt);
+
     try {
         // Insertar en la base de datos
         req.conn
-            .input('jugadorId', sql.Int, jugador)
-            .input('equipoId', sql.Int, equipo)
             .query(`
-                INSERT INTO JugadorEquipo (JugadorId, EquipoId)
-                VALUES (@jugadorId, @equipoId)
+                    UPDATE Jugador
+                    SET NumEquipo = ${equipoInt}
+                    WHERE DNI = ${jugadorInt};
             `);
 
-        res.send('Jugador asignado exitosamente.');
+        
     } catch (error) {
         console.error('Error al asignar jugador:', error);
         res.status(500).send('Ocurrió un error al asignar el jugador.');
     }
+    
+    res.send('Jugador asignado exitosamente.');
 }
 
 module.exports = {
