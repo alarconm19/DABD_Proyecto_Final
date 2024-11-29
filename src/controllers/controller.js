@@ -226,7 +226,7 @@ function getInscripcionJugador(req, res) {
     });
 }
 
-function postInscripcionJugador(req, res) {
+async function postInscripcionJugador(req, res) {
     const { jugador, equipo } = req.body; // Extraer datos del formulario
 
     if (!jugador || !equipo) {
@@ -235,27 +235,34 @@ function postInscripcionJugador(req, res) {
 
     const equipoInt = parseInt(equipo, 10);
     const jugadorInt = parseInt(jugador, 10);
-    console.log(equipoInt);
-    console.log(jugadorInt);
 
     try {
-        // Insertar en la base de datos
-        req.conn
-            .query(`
-                    UPDATE Jugador
-                    SET NumEquipo = ${equipoInt}
-                    WHERE DNI = ${jugadorInt};
-            `);
+        // Obtener la categoría del equipo
+        const equipoCAT = await req.conn.query(`SELECT numcategoria FROM Equipo WHERE NumEquipo = ${equipoInt};`);
 
+        // Obtener la categoría del jugador
+        const jugadorCAT = await req.conn.query(`SELECT numcategoria FROM Jugador WHERE DNI = ${jugadorInt};`);
 
+        // Comprobar si la categoría del equipo y la del jugador son iguales
+        if (equipoCAT !== jugadorCAT) {
+            return res.render('inscripcion-jugador', { title: 'Incripción de jugadores' , error: 'La categoría del jugador no coincide con la del equipo.'});
+        }
+
+        // Si son iguales, realizar la inscripción
+        await req.conn.query(`
+            UPDATE Jugador
+            SET NumEquipo = ${equipoInt}
+            WHERE DNI = ${jugadorInt};
+        `);
+
+        console.log('Jugador asignado exitosamente.');
+        res.render('inscripcion-jugador', { title: 'Inscripción de Jugador', success: 'Jugador asignado exitosamente.' });
     } catch (error) {
         console.error('Error al asignar jugador:', error);
         res.status(500).send('Ocurrió un error al asignar el jugador.');
     }
-
-    console.log('Jugador asignado exitosamente.');
-    res.render('inscripcion-jugador', { title: 'Inscripcion de jugador', success: 'Jugador asignado exitosamente.' });
 }
+
 
 module.exports = {
     // functions
