@@ -28,7 +28,7 @@ BEGIN
         -- Se busca la categoría correspondiente según la edad del jugador.
         DECLARE @NumCategoria INT;
         SELECT TOP 1 @NumCategoria = NumCategoria
-        FROM AFDB.dbo.Categoria
+        FROM DABD.dbo.Categoria
         WHERE @Edad BETWEEN EdadMaxima AND EdadMinima;
 
         -- Lanza un error si no se encuentra una categoria para el jugador.
@@ -39,7 +39,7 @@ BEGIN
 
         IF @NumEquipo > 0
         BEGIN
-	        IF NOT EXISTS (SELECT 1 FROM AFDB.dbo.Equipo WHERE NumEquipo = @NumEquipo)
+	        IF NOT EXISTS (SELECT 1 FROM DABD.dbo.Equipo WHERE NumEquipo = @NumEquipo)
 	        BEGIN
 	            THROW 50005, 'El equipo especificado no existe.', 1;
 	        END
@@ -47,7 +47,7 @@ BEGIN
             -- Se verifica que el equipo pertenece a la categoría asignada al jugador.
             DECLARE @CategoriaEquipo INT;
             SELECT @CategoriaEquipo = NumCategoria
-            FROM AFDB.dbo.Equipo
+            FROM DABD.dbo.Equipo
             WHERE NumEquipo = @NumEquipo;
 
             IF @CategoriaEquipo IS NULL OR @CategoriaEquipo != @NumCategoria
@@ -58,7 +58,7 @@ BEGIN
             -- Tambien se verifica que el equipo no pase a tener más de 11 jugadores.
             DECLARE @CantidadJugadores INT;
             SELECT @CantidadJugadores = COUNT(*)
-            FROM AFDB.dbo.Jugador
+            FROM DABD.dbo.Jugador
             WHERE NumEquipo = @NumEquipo;
 
             IF @CantidadJugadores >= 11
@@ -68,7 +68,7 @@ BEGIN
         END
 
 
-        INSERT INTO AFDB.dbo.Jugador
+        INSERT INTO DABD.dbo.Jugador
             (DNI, Nombre, Apellido, Direccion, URLFotoPerf, FechaNac, Telefono, NumCategoria, NumEquipo)
         VALUES
             (@DNI, @Nombre, @Apellido, @Direccion, @URLFotoPerf, @FechaNac, @Telefono, @NumCategoria,
@@ -92,13 +92,13 @@ AS
 BEGIN
     BEGIN TRY
 
-        IF NOT EXISTS (SELECT 1 FROM AFDB.dbo.Jugador WHERE NroSocio = @NroSocio)
+        IF NOT EXISTS (SELECT 1 FROM DABD.dbo.Jugador WHERE NroSocio = @NroSocio)
         BEGIN
             THROW 50004, 'El jugador especificado no existe.', 1;
         END
 
 
-        IF NOT EXISTS (SELECT 1 FROM AFDB.dbo.Equipo WHERE NumEquipo = @NumEquipo)
+        IF NOT EXISTS (SELECT 1 FROM DABD.dbo.Equipo WHERE NumEquipo = @NumEquipo)
         BEGIN
             THROW 50005, 'El equipo especificado no existe.', 1;
         END
@@ -106,11 +106,11 @@ BEGIN
 
         DECLARE @CategoriaJugador INT, @CategoriaEquipo INT;
         SELECT @CategoriaJugador = NumCategoria
-        FROM AFDB.dbo.Jugador
+        FROM DABD.dbo.Jugador
         WHERE NroSocio = @NroSocio;
 
         SELECT @CategoriaEquipo = NumCategoria
-        FROM AFDB.dbo.Equipo
+        FROM DABD.dbo.Equipo
         WHERE NumEquipo = @NumEquipo;
 
         IF @CategoriaEquipo != @CategoriaJugador
@@ -121,7 +121,7 @@ BEGIN
 
         DECLARE @CantidadJugadores INT;
         SELECT @CantidadJugadores = COUNT(*)
-        FROM AFDB.dbo.Jugador
+        FROM DABD.dbo.Jugador
         WHERE NumEquipo = @NumEquipo;
 
         IF @CantidadJugadores >= 11
@@ -130,7 +130,7 @@ BEGIN
         END
 
 
-        UPDATE AFDB.dbo.Jugador
+        UPDATE DABD.dbo.Jugador
         SET NumEquipo = @NumEquipo
         WHERE NroSocio = @NroSocio;
 

@@ -1,33 +1,43 @@
 <!-- Main Content -->
 <div class="container-fluid ms-5" style="margin-left: 260px; padding-top: 20px;">
     <h2 class="text-uppercase mb-4">Registro de Jugadores</h2>
-    <div class="row">     
+    <div class="row">
         <!-- Formulario para asignar jugador a equipo -->
         <div class="col-md-6">
             <h4 class="mb-3">Asignar Jugador a Equipo</h4>
-            <form action="/asignar-jugador" method="POST">
+            <form action="/inscripcion-jugador" method="POST">
                 <div class="mb-3">
                     <label for="jugador" class="form-label">Seleccionar Jugador</label>
                     <select class="form-select" id="jugador" name="jugador" required>
-                        <!-- Las opciones de jugadores deberían generarse dinámicamente -->
-                        <option value="">Seleccionar Jugador</option>
-                        <option value="1">Juan Pérez</option>
-                        <option value="2">Ana Gómez</option>
-                        <option value="3">Carlos López</option>
+                        <option value="" disabled selected>Seleccione un Jugador...</option>
+                        {{#each jugadores}}
+                        <option value="{{DNI}}"> {{Apellido}}, {{Nombre}} - Cat {{NumCategoria}} </option>
+                        {{/each}}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="equipo" class="form-label">Seleccionar Equipo</label>
                     <select class="form-select" id="equipo" name="equipo" required>
-                        <!-- Las opciones de equipos deberían generarse dinámicamente -->
-                        <option value="">Seleccionar Equipo</option>
-                        <option value="1">Equipo A</option>
-                        <option value="2">Equipo B</option>
-                        <option value="3">Equipo C</option>
+                        <option value="" disabled selected>Seleccione un Equipo...</option>
+                        {{#each equipos}}
+                        <option value="{{NumEquipo}}">{{Nombre}} - Cat {{NumCategoria}} - Div {{NumDivision}}</option>
+                        {{/each}}
                     </select>
                 </div>
                 <button type="submit" class="btn btn-success">Asignar Jugador</button>
             </form>
-        </div>                                  
+            <div class="col-md-4 d-flex align-items-center">
+                {{#if success}}
+                <div class="alert alert-success mt-3" role="alert">
+                    {{success}}
+                </div>
+                {{/if}}
+                {{#if error}}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{error}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
     </div>
-</div> 
+</div>

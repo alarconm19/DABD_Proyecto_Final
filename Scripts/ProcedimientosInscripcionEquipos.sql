@@ -10,19 +10,19 @@ AS
 BEGIN
     BEGIN TRY
 
-        IF NOT EXISTS (SELECT 1 FROM AFDB.dbo.Division WHERE NumDivision = @NumDivision)
+        IF NOT EXISTS (SELECT 1 FROM DABD.dbo.Division WHERE NumDivision = @NumDivision)
         BEGIN
             PRINT 'Error: La división especificada no existe.';
             RETURN;
         END
 
-        IF NOT EXISTS (SELECT 1 FROM AFDB.dbo.Categoria WHERE NumCategoria = @NumCategoria)
+        IF NOT EXISTS (SELECT 1 FROM DABD.dbo.Categoria WHERE NumCategoria = @NumCategoria)
         BEGIN
             PRINT 'Error: La categoría especificada no existe.';
             RETURN;
         END
 
-        INSERT INTO AFDB.dbo.Equipo (NumDivision, NumCategoria, Nombre)
+        INSERT INTO DABD.dbo.Equipo (NumDivision, NumCategoria, Nombre)
         VALUES (@NumDivision, @NumCategoria, @Nombre);
 
         PRINT 'Equipo registrado correctamente.';
@@ -44,7 +44,7 @@ BEGIN
         IF @NumEquipo = 0
             SET @NumEquipo = NULL;
 
-        INSERT INTO AFDB.dbo.DirectorTecnico (Nombre, NumEquipo)
+        INSERT INTO DABD.dbo.DirectorTecnico (Nombre, NumEquipo)
         VALUES (@Nombre, @NumEquipo);
 
         PRINT 'Director técnico registrado correctamente.';
@@ -66,14 +66,14 @@ BEGIN
         DECLARE @EquipoActual INT;
 
         SELECT @EquipoActual = NumEquipo
-        FROM AFDB.dbo.DirectorTecnico
+        FROM DABD.dbo.DirectorTecnico
         WHERE NumDT = @NumDT;
 
         IF @EquipoActual IS NOT NULL
         BEGIN
             PRINT 'El director técnico ya está asignado al equipo con ID: ' + CAST(@EquipoActual AS VARCHAR);
         END
-        IF NOT EXISTS (SELECT 1 FROM AFDB.dbo.Equipo WHERE NumEquipo = @NumEquipo)
+        IF NOT EXISTS (SELECT 1 FROM DABD.dbo.Equipo WHERE NumEquipo = @NumEquipo)
         BEGIN
             PRINT 'Error: El equipo especificado no existe.';
             RETURN;
@@ -81,7 +81,7 @@ BEGIN
         ELSE
         BEGIN
             -- Si no lo está, entonces se asigna a un nuevo equipo
-            UPDATE AFDB.dbo.DirectorTecnico
+            UPDATE DABD.dbo.DirectorTecnico
             SET NumEquipo = @NumEquipo
             WHERE NumDT = @NumDT;
 

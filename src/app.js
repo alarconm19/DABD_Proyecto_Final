@@ -26,10 +26,11 @@ const poolPromise = new sql.ConnectionPool({
     password: process.env.AZURE_PASS, // Contraseña del usuario
     server: process.env.AZURE_HOST, // Servidor de la instancia en Azure
     database: process.env.AZURE_DB,      // Nombre de la base de datos
-    options: {
-        encrypt: true, // Requerido para conexiones con Azure SQL
-        trustServerCertificate: true, // Cambiar a true si no usas certificados
-    },
+    port: 1433, // Puerto de la base de datos
+    // options: {
+    //     encrypt: true, // Requerido para conexiones con Azure SQL
+    //     trustServerCertificate: false, // Cambiar a true si no usas certificados
+    // },
 }).connect();
 
 app.use((req, res, next) => {
@@ -48,7 +49,7 @@ app.use((req, res, next) => {
 
 // Config session
 app.use(session({
-    secret: 'your-secret-key',
+    secret: 'your-fasdfas-fas',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // Cambia a true si usas HTTPS
