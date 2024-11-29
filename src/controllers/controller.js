@@ -116,69 +116,47 @@ function getRegistroEquipos(req, res) {
 function postRegistroEquipos(req, res) {
     const { nombreEquipo, categoria, division, nombreDT } = req.body;
 
-    // Asegúrate de convertir 'categoria' y 'division' a enteros
     const categoriaInt = parseInt(categoria, 10);
     const divisionInt = parseInt(division, 10);
 
-    console.log(nombreEquipo, categoriaInt, divisionInt, nombreDT);
+    if (isNaN(categoriaInt) || isNaN(divisionInt)) {
+        return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Categoría o división no válida.' });
+    }
 
-    // Prepara la consulta SQL con parámetros
+    // Crear el equipo
     const queryCrearEquipo = `EXEC InsertarEquipo @NumDivision = ${divisionInt}, @NumCategoria = ${categoriaInt}, @Nombre = '${nombreEquipo}';`;
-
-    // Ejecuta la consulta con parámetros usando req.query
-    req.conn.query(queryCrearEquipo, (err, rows) => {
+    req.conn.query(queryCrearEquipo, (err) => {
         if (err) {
             console.error(err);
-            return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al registrar equipo' });
+            return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al registrar equipo.' });
         }
 
         // Obtener el número de equipo
-        const NumEquipo = req.conn.query('SELECT MAX(NumEquipo) as NumEquipo FROM Equipo', (err, rows) => {
+        req.conn.query('SELECT MAX(NumEquipo) as NumEquipo FROM Equipo', (err, rows) => {
             if (err) {
                 console.error(err);
-                return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al obtener número de equipo' });
+                return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al obtener número de equipo.' });
             }
 
-            return parseInt(rows.recordset[0].NumEquipo, 10);
-        });
-
-        console.log(NumEquipo);
-
-        // Crear un técnico para el equipo
-        const queryCrearTecnico = `EXEC CrearDirectorTecnico @Nombre = '${nombreDT}', @NumEquipo = ${NumEquipo};`;
-
-        // Ejecutar la consulta para crear el técnico
-        req.conn.query(queryCrearTecnico, (err, rows) => {
-            if (err) {
-                console.error(err);
-                return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al registrar técnico' });
+            const NumEquipo = parseInt(rows.recordset[0].NumEquipo, 10);
+            if (isNaN(NumEquipo)) {
+                return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Número de equipo inválido.' });
             }
 
-            //obtener el numero de tecnico
-            const NumDT = req.conn.query('SELECT MAX(NumDT) as NumDT FROM DirectorTecnico', (err, rows) => {
+            // Crear el técnico
+            const queryCrearTecnico = `EXEC CrearDirectorTecnico @Nombre = '${nombreDT}', @NumEquipo = ${NumEquipo};`;
+            req.conn.query(queryCrearTecnico, (err) => {
                 if (err) {
                     console.error(err);
-                    return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al obtener número de técnico' });
+                    return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al registrar técnico.' });
                 }
 
-                return parseInt(rows.recordset[0].NumDT, 10);
-            });
-
-            //asignar el tecnico al equipo
-            const queryAsignarTecnico = `EXEC AsignarDirectorTecnicoAEquipo @NumDT = ${NumDT}, @NumEquipo = ${NumEquipo};`;
-
-            //ejecutar la consulta para asignar el tecnico
-            req.conn.query(queryAsignarTecnico, (err, rows) => {
-                if (err) {
-                    console.error(err);
-                    return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al asignar técnico' });
-                }
-
-                res.render('registro-equipos', { title: 'Registro de Equipos', success: 'Registro exitoso' });
+                res.render('registro-equipos', { title: 'Registro de Equipos', success: 'Registro exitoso.' });
             });
         });
     });
 }
+
 
 function getRegistroJugador(req, res) {
     res.render('registro-jugador', { title: 'Registro de Jugadores' });
