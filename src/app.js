@@ -25,7 +25,7 @@ const poolPromise = new sql.ConnectionPool({
     user: process.env.AZURE_USER,        // Usuario de SQL Server
     password: process.env.AZURE_PASS, // Contraseña del usuario
     server: process.env.AZURE_HOST, // Servidor de la instancia en Azure
-    database: process.env.DB,      // Nombre de la base de datos
+    database: process.env.AZURE_DB,      // Nombre de la base de datos
     options: {
         encrypt: true, // Requerido para conexiones con Azure SQL
         trustServerCertificate: true, // Cambiar a true si no usas certificados

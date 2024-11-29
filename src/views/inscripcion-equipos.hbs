@@ -1,32 +1,59 @@
 <!-- Main Content -->
 <div class="container-fluid ms-5" style="margin-left: 260px; padding-top: 20px;">
     <h2 class="text-uppercase mb-4">Inscripción de Equipos</h2>
-    <form action="/inscripcion-equipo" method="POST">
+    <form action="/inscripcion-equipos" method="POST">
         <div class="col-md-6">
-
+            <h4 class="mb-3">Inscribir nuevo equipo</h4>
             <div class="mb-3">
                 <label for="torneo" class="form-label">Seleccione el Torneo</label>
-                <select class="form-select" id="torneo" required>
-                    <option value="">Seleccione un torneo...</option>
-                    <option value="1">Torneo Apertura</option>
-                    <option value="2">Torneo Clausura</option>
+                <select class="form-select" id="torneo" name="torneo" required>
+                    <option value="" disabled selected>Seleccione un torneo...</option>
+                    {{#each torneos}}
+                    <option value="{{IdTorneo}}">{{Nombre}} - Cat {{NumCategoria}} - Div {{NumDivision}}</option>
+                    {{/each}}
                 </select>
             </div>
             <div class="mb-3">
                 <label for="equipo" class="form-label">Equipo a Inscribir</label>
-                <input type="text" class="form-control" id="equipo" placeholder="Ingrese el nombre del equipo" required>
+                <select class="form-select" id="equipo" name="equipo" required>
+                    <option value="" disabled selected>Seleccione un equipo...</option>
+                    {{#each equipos}}
+                    <option value="{{NumEquipo}}">{{Nombre}} - Cat {{NumCategoria}} - Div {{NumDivision}} </option>
+                    {{/each}}
+                </select>
             </div>
+            {{!-- <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <select class="form-select" id="categoria" name="categoria" required>
+                    <option value="" disabled selected>Seleccione una categoría...</option>
+                    <option value=1>Maxi</option>
+                    <option value=2>Super</option>
+                    <option value=3>Master</option>
+                </select>
+            </div>
+
             <div class="mb-3">
-                <label for="categoriaInscripcion" class="form-label">Categoría</label>
-                <input type="number" class="form-control" id="categoriaInscripcion" placeholder="Número de Categoría"
-                    required>
-            </div>
-            <div class="mb-3">
-                <label for="divisionInscripcion" class="form-label">División</label>
-                <input type="number" class="form-control" id="divisionInscripcion" placeholder="Número de División"
-                    required>
-            </div>
+                <label for="division" class="form-label">División</label>
+                <select class="form-select" id="division" name="division" required>
+                    <option value="" selected disabled>Seleccione una división...</option>
+                    <option value=1>A</option>
+                    <option value=2>B</option>
+                    <option value=3>C</option>
+                </select>
+            </div> --}}
             <button type="submit" class="btn btn-success">Inscribir Equipo</button>
+            <div class="col-md-3 d-flex align-items-center">
+                {{#if success}}
+                <div class="alert alert-success mt-3" role="alert">
+                    {{success}}
+                </div>
+                {{/if}}
+                {{#if error}}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{error}}
+                </div>
+                {{/if}}
+            </div>
         </div>
     </form>
 </div>
