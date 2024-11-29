@@ -180,6 +180,41 @@ function postRegistroEquipos(req, res) {
     });
 }
 
+function getRegistroJugador(req, res) {
+    res.render('registro-jugador', { title: 'Registro de Jugadores' });
+}
+
+function postRegistroJugador(req, res) {
+
+}
+
+function getInscripcionJugador(req, res) {
+    res.render('inscripcion-jugador', { title: 'Asignar jugadores' });
+}
+
+function postInscripcionJugador(req, res) {
+    const { jugador, equipo } = req.body; // Extraer datos del formulario
+
+    if (!jugador || !equipo) {
+        return res.status(400).send('Por favor, complete todos los campos.');
+    }
+
+    try {
+        // Insertar en la base de datos
+        req.conn
+            .input('jugadorId', sql.Int, jugador)
+            .input('equipoId', sql.Int, equipo)
+            .query(`
+                INSERT INTO JugadorEquipo (JugadorId, EquipoId)
+                VALUES (@jugadorId, @equipoId)
+            `);
+
+        res.send('Jugador asignado exitosamente.');
+    } catch (error) {
+        console.error('Error al asignar jugador:', error);
+        res.status(500).send('Ocurrió un error al asignar el jugador.');
+    }
+}
 
 module.exports = {
     // functions
@@ -188,5 +223,9 @@ module.exports = {
     getInscripcionEquipos,
     postInscripcionEquipos,
     getRegistroEquipos,
-    postRegistroEquipos
+    postRegistroEquipos,
+    getRegistroJugador,
+    postRegistroJugador,
+    getInscripcionJugador,
+    postInscripcionJugador
 };

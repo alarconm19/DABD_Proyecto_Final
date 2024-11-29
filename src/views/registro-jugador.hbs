@@ -1,0 +1,43 @@
+<!-- Main Content -->
+<div class="container-fluid ms-5" style="margin-left: 260px; padding-top: 20px;">
+    <h2 class="text-uppercase mb-4">Registro de Jugadores</h2>
+    <div class="row">
+        <!-- Formulario para registro de jugador -->
+        <div class="col-md-6">
+            <h4 class="mb-3">Registrar Nuevo Jugador</h4>
+            <form action="/registro-jugador" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="dni" name="dni" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fotoPerfil" class="form-label">Foto de Perfil</label>
+                    <input type="file" class="form-control" id="fotoPerfil" name="fotoPerfil" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Jugador</button>
+            </form>
+        </div>
+
+        
+    </div>
+</div> 
