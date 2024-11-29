@@ -16,6 +16,6 @@ router.get('/inscripcion-equipos', controller.getInscripcionEquipos);
 router.post('/inscripcion-equipos', controller.postInscripcionEquipos);
 
 router.get('/registro-equipos', controller.getRegistroEquipos);
-// router.post('/registro-equipos', controller.postRegistroEquipos);
+router.post('/registro-equipos', controller.postRegistroEquipos);
 
 module.exports = router;

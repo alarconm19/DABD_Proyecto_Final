@@ -16,8 +16,7 @@ function postCreacionTorneos(req, res) {
     // Prepara la consulta SQL con parámetros
     const query = `
         INSERT INTO Torneo (NumCategoria, NumDivision, FechaInicioTorneo, FechaFinTorneo, FechaInicioInscripcion, FechaFinInscripcion, Nombre)
-        VALUES (${categoriaInt}, ${divisionInt}, '${fechaInicio}', '${fechaFin}', '${inicioInscripcion}', '${finInscripcion}', '${nombreTorneo}');
-    `;
+        VALUES (${categoriaInt}, ${divisionInt}, '${fechaInicio}', '${fechaFin}', '${inicioInscripcion}', '${finInscripcion}', '${nombreTorneo}');`;
 
     // Ejecuta la consulta con parámetros usando req.query
     req.conn.query(query, (err, rows) => {
@@ -57,9 +56,7 @@ function postInscripcionEquipos(req, res) {
     console.log(torneoInt, equipoInt);
 
     // Prepara la consulta SQL para insertar
-    const query = `
-        UPDATE Equipo set IdTorneo = ${torneoInt} WHERE NumEquipo = ${equipoInt};
-    `;
+    const query = `UPDATE Equipo set IdTorneo = ${torneoInt} WHERE NumEquipo = ${equipoInt};`;
 
     // Consulta torneos
     req.conn.query('SELECT idtorneo, NumCategoria, NumDivision FROM Torneo', (err, torneos) => {
@@ -83,7 +80,8 @@ function postInscripcionEquipos(req, res) {
             if (!torneoSeleccionado || !equipoSeleccionado ||
                 torneoSeleccionado.NumCategoria !== equipoSeleccionado.NumCategoria ||
                 torneoSeleccionado.NumDivision !== equipoSeleccionado.NumDivision) {
-                return res.render('inscripcion-equipos', { title: 'Inscripción de Equipos', error: 'El equipo no pertenece a la misma categoría y división del torneo.',
+                return res.render('inscripcion-equipos', {
+                    title: 'Inscripción de Equipos', error: 'El equipo no pertenece a la misma categoría y división del torneo.',
                     torneos: torneos.recordset, equipos: equipos.recordset
                 });
             }
@@ -111,10 +109,75 @@ function postInscripcionEquipos(req, res) {
     });
 }
 
-
-
 function getRegistroEquipos(req, res) {
     res.render('registro-equipos', { title: 'Registro de Equipos' });
+}
+
+function postRegistroEquipos(req, res) {
+    const { nombreEquipo, categoria, division, nombreDT } = req.body;
+
+    // Asegúrate de convertir 'categoria' y 'division' a enteros
+    const categoriaInt = parseInt(categoria, 10);
+    const divisionInt = parseInt(division, 10);
+
+    console.log(nombreEquipo, categoriaInt, divisionInt, nombreDT);
+
+    // Prepara la consulta SQL con parámetros
+    const queryCrearEquipo = `EXEC InsertarEquipo @NumDivision = ${divisionInt}, @NumCategoria = ${categoriaInt}, @Nombre = '${nombreEquipo}';`;
+
+    // Ejecuta la consulta con parámetros usando req.query
+    req.conn.query(queryCrearEquipo, (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al registrar equipo' });
+        }
+
+        // Obtener el número de equipo
+        const NumEquipo = req.conn.query('SELECT MAX(NumEquipo) as NumEquipo FROM Equipo', (err, rows) => {
+            if (err) {
+                console.error(err);
+                return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al obtener número de equipo' });
+            }
+
+            return parseInt(rows.recordset[0].NumEquipo, 10);
+        });
+
+        console.log(NumEquipo);
+
+        // Crear un técnico para el equipo
+        const queryCrearTecnico = `EXEC CrearDirectorTecnico @Nombre = '${nombreDT}', @NumEquipo = ${NumEquipo};`;
+
+        // Ejecutar la consulta para crear el técnico
+        req.conn.query(queryCrearTecnico, (err, rows) => {
+            if (err) {
+                console.error(err);
+                return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al registrar técnico' });
+            }
+
+            //obtener el numero de tecnico
+            const NumDT = req.conn.query('SELECT MAX(NumDT) as NumDT FROM DirectorTecnico', (err, rows) => {
+                if (err) {
+                    console.error(err);
+                    return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al obtener número de técnico' });
+                }
+
+                return parseInt(rows.recordset[0].NumDT, 10);
+            });
+
+            //asignar el tecnico al equipo
+            const queryAsignarTecnico = `EXEC AsignarDirectorTecnicoAEquipo @NumDT = ${NumDT}, @NumEquipo = ${NumEquipo};`;
+
+            //ejecutar la consulta para asignar el tecnico
+            req.conn.query(queryAsignarTecnico, (err, rows) => {
+                if (err) {
+                    console.error(err);
+                    return res.render('registro-equipos', { title: 'Registro de Equipos', error: 'Error al asignar técnico' });
+                }
+
+                res.render('registro-equipos', { title: 'Registro de Equipos', success: 'Registro exitoso' });
+            });
+        });
+    });
 }
 
 
@@ -125,5 +188,5 @@ module.exports = {
     getInscripcionEquipos,
     postInscripcionEquipos,
     getRegistroEquipos,
-
+    postRegistroEquipos
 };
