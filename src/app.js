@@ -1,6 +1,7 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
 const session = require('express-session');
+
 const path = require('path');
 const sql = require('mssql');
 const routes = require('./routes/routes');
@@ -15,7 +16,7 @@ app.set('views', __dirname + '/views');
 app.engine('.hbs', engine({
     extname: '.hbs'
 }));
-app.set('view engine', '.hbs');
+app.set('view engine', 'hbs');
 
 // Config public folder
 app.use(express.static(path.join(__dirname, '..', 'public')));
