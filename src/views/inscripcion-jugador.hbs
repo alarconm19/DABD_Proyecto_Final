@@ -26,6 +26,18 @@
                 </div>
                 <button type="submit" class="btn btn-success">Asignar Jugador</button>
             </form>
+            <div class="col-md-4 d-flex align-items-center">
+                {{#if success}}
+                <div class="alert alert-success mt-3" role="alert">
+                    {{success}}
+                </div>
+                {{/if}}
+                {{#if error}}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{error}}
+                </div>
+                {{/if}}
+            </div>
         </div>
     </div>
 </div>
