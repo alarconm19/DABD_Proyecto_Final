@@ -27,10 +27,10 @@ const poolPromise = new sql.ConnectionPool({
     server: process.env.AZURE_HOST, // Servidor de la instancia en Azure
     database: process.env.AZURE_DB,      // Nombre de la base de datos
     port: 1433, // Puerto de la base de datos
-    options: {
-        encrypt: true, // Requerido para conexiones con Azure SQL
-        trustServerCertificate: false, // Cambiar a true si no usas certificados
-    },
+    // options: {
+    //     encrypt: true, // Requerido para conexiones con Azure SQL
+    //     trustServerCertificate: false, // Cambiar a true si no usas certificados
+    // },
 }).connect();
 
 app.use((req, res, next) => {
