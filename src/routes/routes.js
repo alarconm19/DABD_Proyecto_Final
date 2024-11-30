@@ -24,4 +24,7 @@ router.post('/registro-jugador', controller.postRegistroJugador);
 router.get('/inscripcion-jugador', controller.getInscripcionJugador);
 router.post('/inscripcion-jugador', controller.postInscripcionJugador);
 
+router.get('/equipos-y-jugadores', controller.getEquiposYJugadores);
+
+
 module.exports = router;

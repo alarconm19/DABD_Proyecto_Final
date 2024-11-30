@@ -262,6 +262,89 @@ async function postInscripcionJugador(req, res) {
         res.status(500).send('Ocurrió un error al asignar el jugador.');
     }
 }
+//LISTAS
+// function getEquiposYJugadores(req, res) {
+//     // Obtener equipos
+//     req.conn.query('', (err, equipos) => {
+//         if (err) {
+//             console.error(err);
+//             return res.status(500).send('Error al obtener los equipos.');
+//         }
+
+//         // Obtener jugadores
+//         req.conn.query('SELECT * FROM Jugador', (err, jugadores) => {
+//             if (err) {
+//                 console.error(err);
+//                 return res.status(500).send('Error al obtener los jugadores.');
+//             }
+
+//             // Renderiza la vista y pasa los datos de equipos y jugadores
+//             res.render('equipos-y-jugadores', {
+//                 title: 'Equipos y Jugadores',
+//                 equipos: equipos.recordset,
+//                 jugadores: jugadores.recordset
+//             });
+//         });
+//     });
+// }
+
+function formatDate(date) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(date).toLocaleDateString('es-AR', options); // Formato: DD/MM/YYYY
+}
+
+
+function getEquiposYJugadores(req, res) {
+    // Obtener equipos
+    req.conn.query('SELECT * FROM Equipo', (err, equipos) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error al obtener los equipos.');
+        }
+
+        // Obtener jugadores con la edad calculada
+        req.conn.query(`
+            SELECT 
+                DNI, 
+                Nombre, 
+                Apellido, 
+                NumEquipo, 
+                FechaNac, 
+                DATEDIFF(YEAR, FechaNac, GETDATE()) - 
+                    CASE 
+                        WHEN MONTH(FechaNac) > MONTH(GETDATE()) 
+                            OR (MONTH(FechaNac) = MONTH(GETDATE()) AND DAY(FechaNac) > DAY(GETDATE())) 
+                        THEN 1 
+                        ELSE 0 
+                    END AS Edad
+            FROM Jugador
+            ORDER BY Nombre, Apellido
+        `, (err, jugadores) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Error al obtener los jugadores.');
+            }
+
+             // Formatear la fecha de nacimiento para cada jugador
+             jugadores.recordset.forEach(jugador => {
+                jugador.FechaNac = formatDate(jugador.FechaNac);
+            });
+
+
+
+            // Renderiza la vista y pasa los datos de equipos y jugadores
+            res.render('equipos-y-jugadores', {
+                title: 'Equipos y Jugadores',
+                equipos: equipos.recordset,
+                jugadores: jugadores.recordset
+            });
+        });
+    });
+}
+
+
+
+
 
 
 module.exports = {
@@ -275,5 +358,7 @@ module.exports = {
     getRegistroJugador,
     postRegistroJugador,
     getInscripcionJugador,
-    postInscripcionJugador
+    postInscripcionJugador,
+    getEquiposYJugadores
 };
+

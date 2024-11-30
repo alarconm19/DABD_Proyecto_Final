@@ -1,0 +1,60 @@
+{{!-- <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1> --}}
+<div>
+    <h2>Equipos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>NumEquipo</th>
+                <th>Nombre</th>
+                <th>NumCategoria</th>
+                <th>NumDivision</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each equipos}}
+                <tr>
+                    <td>{{NumEquipo}}</td>
+                    <td>{{Nombre}}</td>
+                    <td>{{NumCategoria}}</td>
+                    <td>{{NumDivision}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <h2>Jugadores</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>NumEquipo</th>
+                <th>Fecha Nacimiento</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each jugadores}}
+                <tr>
+                    <td>{{DNI}}</td>
+                    <td>{{Nombre}}</td>
+                    <td>{{Apellido}}</td>
+                    <td>{{NumEquipo}}</td>
+                    <td>{{FechaNac}}</td>
+                    <td>{{Edad}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{!-- </body>
+</html> --}}

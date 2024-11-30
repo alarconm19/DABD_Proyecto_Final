@@ -25,3 +25,37 @@
     background-color: #256629; /* Fondo más oscuro al pasar el mouse */
     border-radius: 4px; /* Bordes redondeados al hover */
 }
+
+
+
+
+/*TABLAS*/
+
+table {
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+    border-collapse: collapse; /* Quita los bordes duplicados */
+    margin-bottom: 20px; /* Espaciado entre tablas */
+}
+
+table th {
+    background-color: #2e7d32; /* Mismo verde que el sidebar */
+    color: white; /* Texto blanco para contraste */
+    padding: 10px; /* Espaciado interno */
+    text-align: left; /* Alineación del texto */
+    font-weight: bold; /* Negrita para los encabezados */
+    border: 1px solid #ddd; /* Bordes ligeros */
+}
+
+table td {
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Bordes ligeros */
+    text-align: left; /* Alineación del texto */
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fondo gris claro para filas pares */
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1; /* Fondo más claro al pasar el mouse */
+}
